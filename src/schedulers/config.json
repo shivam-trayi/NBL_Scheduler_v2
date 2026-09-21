@@ -1,0 +1,22 @@
+{
+  "jobs": {
+    "nblArchiver": {
+      "isEnabled": true,
+      "maxConcurrency": 1,
+      "retries": 2,
+      "cronType": "Repetitive",
+      "date": null,
+      "cron": "30 5 * * *"
+    }
+  },
+  "DatabaseDetails": {
+    "sourceDb": "neuralbyt",
+    "destDb": "neuralbyt_archive"
+  },
+  "BulkCopy": {
+    "daysOld": 450,
+    "chunkSize": 50,
+    "connectionTimeout": 300000,
+    "requestTimeout": 300000
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "maxLogFileSize": 5242880,
+  "folderNamePattern": "YYYY_MM_DD",
+  "fileNamePattern": "YYYY_MM_DD",
+  "logLocation": "../../logs"
+}
