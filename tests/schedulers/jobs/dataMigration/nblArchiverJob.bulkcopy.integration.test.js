@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { callStoredProcedure, closePool } from '#dblayer/sqlserver/db.js';
+import { callStoredProcedure, executeQuery, closePool } from '#dblayer/sqlserver/db.js';
 import { getBulkCopyConfig } from '#schedulers/config.js';
 import sql from 'mssql';
 
@@ -66,7 +66,7 @@ describe('Integration: nblArchiverJob BulkCopy logic', () => {
     }));
     const inClause = surveyIds.map((_, idx) => `@id${idx}`).join(',');
 
-    const srcResult = await callStoredProcedure(
+    const srcResult = await executeQuery(
       `SELECT SurveyGUID FROM dbo.surveys WHERE SurveyGUID IN (${inClause})`,
       params
     );

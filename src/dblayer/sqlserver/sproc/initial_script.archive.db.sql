@@ -1,15 +1,15 @@
 -- ============================================================
--- NBL Archive DB (neuralbyt_archive) — Table Creation Script
+-- NBL Archive DB (staging_neuralbyt_archive) — Table Creation Script
 -- Schema: dbo
 -- Run this ONCE to set up the archive database.
 -- ============================================================
 
 -- Create archive database if it doesn't exist
-IF DB_ID(N'neuralbyt_archive') IS NULL
-    CREATE DATABASE neuralbyt_archive;
+IF DB_ID(N'staging_neuralbyt_archive') IS NULL
+    CREATE DATABASE staging_neuralbyt_archive;
 GO
 
-USE neuralbyt_archive;
+USE staging_neuralbyt_archive;
 GO
 
 -- ─── surveys ─────────────────────────────────────────────────

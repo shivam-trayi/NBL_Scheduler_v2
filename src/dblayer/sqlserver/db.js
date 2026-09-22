@@ -56,8 +56,9 @@ async function getBulkSqlConfig() {
 // ─── Public API ──────────────────────────────────────────────────────────────
 
 /** Execute a stored procedure on the normal pool (30s timeout) */
-export const callStoredProcedure = async (procName, params = []) =>
-  executeStoredProcedure(procName, params);
+export const callStoredProcedure = async (procName, params = []) => executeStoredProcedure(procName, params);
+
+export async function executeQuery(queryString, params = []) { const pool = await getPool(); const request = createRequest(pool, params, 30000); return request.query(queryString); }
 
 /** Execute a stored procedure on the bulk pool (300s timeout) — for archival operations */
 export async function callBulkCopyStoredProcedure(procName, params = []) {

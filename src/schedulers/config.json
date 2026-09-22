@@ -1,5 +1,13 @@
 {
   "jobs": {
+    "testMigrationJobForNBL": {
+      "isEnabled": false,
+      "maxConcurrency": 1,
+      "retries": 2,
+      "cronType": "Repetitive",
+      "date": null,
+      "cron": "* * * * *"
+    },
     "nblArchiver": {
       "isEnabled": true,
       "maxConcurrency": 1,
@@ -10,11 +18,11 @@
     }
   },
   "DatabaseDetails": {
-    "sourceDb": "neuralbyt",
-    "destDb": "neuralbyt_archive"
+    "sourceDb": "staging_neuralbyt",
+    "destDb": "staging_neuralbyt_archive"
   },
   "BulkCopy": {
-    "daysOld": 90,
+    "daysOld": 450,
     "chunkSize": 50,
     "connectionTimeout": 300000,
     "requestTimeout": 300000

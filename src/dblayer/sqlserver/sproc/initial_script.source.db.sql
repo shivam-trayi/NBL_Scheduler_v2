@@ -3,7 +3,7 @@
 -- Schema: dbo
 -- ============================================================
 
-USE neuralbyt;
+USE staging_neuralbyt;
 GO
 
 -- ─── TVP Type ────────────────────────────────────────────────
@@ -55,11 +55,11 @@ ALTER PROCEDURE dbo.usp_MoveParticipantsBySurveyIds
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.participants ON;
-    INSERT INTO neuralbyt_archive.dbo.participants
-    SELECT * FROM dbo.participants
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.participants ON;
+    INSERT INTO staging_neuralbyt_archive.dbo.participants ([Id], [SurveyId], [VendorId], [UID], [PanelId], [IpAddress], [PStatus], [ClientStatus], [StartAt], [EndAt], [UserLoi], [CreatedAt], [UpdatedAt], [IsRedirected], [SurveyLoi], [SurveyIr], [SurveyClientCost], [VendorCost], [ClientId], [CookieId], [PoNumber], [IsTestUser], [ClientS2SReceived], [ClientS2STime], [ClientSurveyId], [ClientSurveyLoi], [VendorSurveyId], [IsApiSurvey], [IsReconciled], [FinalStatus], [ReconciledAt], [SupplierId], [IsRouterUser], [RouterSurveyId], [ClientGrossCost], [IsAdjusted], [AskingCpi], [SSVendorGUID], [IsNewRouter], [SdkId], [TSPID], [VStatus])
+    SELECT [Id], [SurveyId], [VendorId], [UID], [PanelId], [IpAddress], [PStatus], [ClientStatus], [StartAt], [EndAt], [UserLoi], [CreatedAt], [UpdatedAt], [IsRedirected], [SurveyLoi], [SurveyIr], [SurveyClientCost], [VendorCost], [ClientId], [CookieId], [PoNumber], [IsTestUser], [ClientS2SReceived], [ClientS2STime], [ClientSurveyId], [ClientSurveyLoi], [VendorSurveyId], [IsApiSurvey], [IsReconciled], [FinalStatus], [ReconciledAt], [SupplierId], [IsRouterUser], [RouterSurveyId], [ClientGrossCost], [IsAdjusted], [AskingCpi], [SSVendorGUID], [IsNewRouter], [SdkId], [TSPID], [VStatus] FROM dbo.participants
     WHERE SurveyId IN (SELECT SurveyId FROM @SurveyId);
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.participants OFF;
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.participants OFF;
 END
 GO
 
@@ -88,13 +88,13 @@ ALTER PROCEDURE dbo.usp_MoveParticipantsRedirectsBySurveyIds
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.participantsredirects ON;
-    INSERT INTO neuralbyt_archive.dbo.participantsredirects
-    SELECT pr.*
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.participantsredirects ON;
+    INSERT INTO staging_neuralbyt_archive.dbo.participantsredirects ([Id], [Pid], [LandingUrl], [VendorUrl], [ClientUrl], [ClientReturnUrl], [CreatedAt], [UpdatedAt])
+    SELECT pr.[Id], pr.[Pid], pr.[LandingUrl], pr.[VendorUrl], pr.[ClientUrl], pr.[ClientReturnUrl], pr.[CreatedAt], pr.[UpdatedAt]
     FROM dbo.participantsredirects AS pr
     INNER JOIN dbo.participants AS p ON pr.Pid = p.Id
     WHERE p.SurveyId IN (SELECT SurveyId FROM @SurveyId);
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.participantsredirects OFF;
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.participantsredirects OFF;
 END
 GO
 
@@ -125,11 +125,11 @@ ALTER PROCEDURE dbo.usp_MoveParticipantReplyBySurveyIds
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.participantreply ON;
-    INSERT INTO neuralbyt_archive.dbo.participantreply
-    SELECT * FROM dbo.participantreply
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.participantreply ON;
+    INSERT INTO staging_neuralbyt_archive.dbo.participantreply ([Id], [SelectedData], [SID], [TID], [UID], [ParticipantId], [CreatedAt], [UpdatedAt], [QueryId], [QueryText], [OptionText], [IsCorrect], [LangCode], [CookieId], [IsZipValidate])
+    SELECT [Id], [SelectedData], [SID], [TID], [UID], [ParticipantId], [CreatedAt], [UpdatedAt], [QueryId], [QueryText], [OptionText], [IsCorrect], [LangCode], [CookieId], [IsZipValidate] FROM dbo.participantreply
     WHERE SID IN (SELECT SurveyId FROM @SurveyId);
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.participantreply OFF;
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.participantreply OFF;
 END
 GO
 
@@ -158,11 +158,11 @@ ALTER PROCEDURE dbo.usp_MoveSurveyDemoMappingBySurveyIds
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.surveydemomapping ON;
-    INSERT INTO neuralbyt_archive.dbo.surveydemomapping
-    SELECT * FROM dbo.surveydemomapping
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.surveydemomapping ON;
+    INSERT INTO staging_neuralbyt_archive.dbo.surveydemomapping ([Id], [SurveyId], [DemographicId], [QueryId], [LangCode], [IsActive], [CreatedAt], [CreatedBy], [UpdatedBy], [UpdatedAt], [AllText], [IsZipValidate], [isApiDemo], [AnswerIds], [SurveyId_Qual])
+    SELECT [Id], [SurveyId], [DemographicId], [QueryId], [LangCode], [IsActive], [CreatedAt], [CreatedBy], [UpdatedBy], [UpdatedAt], [AllText], [IsZipValidate], [isApiDemo], [AnswerIds], [SurveyId_Qual] FROM dbo.surveydemomapping
     WHERE SurveyId IN (SELECT SurveyId FROM @SurveyId);
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.surveydemomapping OFF;
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.surveydemomapping OFF;
 END
 GO
 
@@ -191,11 +191,11 @@ ALTER PROCEDURE dbo.usp_MoveDemoRangeMappingBySurveyIds
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.demorangemapping ON;
-    INSERT INTO neuralbyt_archive.dbo.demorangemapping
-    SELECT * FROM dbo.demorangemapping
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.demorangemapping ON;
+    INSERT INTO staging_neuralbyt_archive.dbo.demorangemapping ([SurveyId], [DemographicsId], [QueryId], [RangeFrom], [RangeTo], [CreatedBy], [UpdatedBy], [CreatedAt], [UpdatedAt], [LangCode], [Id], [IsActive], [IsApiDemo], [SurveyId_Qual])
+    SELECT [SurveyId], [DemographicsId], [QueryId], [RangeFrom], [RangeTo], [CreatedBy], [UpdatedBy], [CreatedAt], [UpdatedAt], [LangCode], [Id], [IsActive], [IsApiDemo], [SurveyId_Qual] FROM dbo.demorangemapping
     WHERE SurveyId IN (SELECT SurveyId FROM @SurveyId);
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.demorangemapping OFF;
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.demorangemapping OFF;
 END
 GO
 
@@ -224,11 +224,11 @@ ALTER PROCEDURE dbo.usp_MoveAllocatedVendorBySurveyIds
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.allocatedvendor ON;
-    INSERT INTO neuralbyt_archive.dbo.allocatedvendor
-    SELECT * FROM dbo.allocatedvendor
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.allocatedvendor ON;
+    INSERT INTO staging_neuralbyt_archive.dbo.allocatedvendor ([SurveyId], [VendorId], [IsActive], [CompleteUrl], [TerminateUrl], [SecurityUrl], [QuotaFullUrl], [QuotaType], [Quota], [TotalCompleteCount], [CPI], [CreatedBy], [CreatedAt], [UpdatedBy], [UpdatedAt], [SurveyLiveUrl], [SurveyTestUrl], [VendorPo], [SurveyId_VendorId], [SupplierSurveyId], [IsQuotaCheck], [Id])
+    SELECT [SurveyId], [VendorId], [IsActive], [CompleteUrl], [TerminateUrl], [SecurityUrl], [QuotaFullUrl], [QuotaType], [Quota], [TotalCompleteCount], [CPI], [CreatedBy], [CreatedAt], [UpdatedBy], [UpdatedAt], [SurveyLiveUrl], [SurveyTestUrl], [VendorPo], [SurveyId_VendorId], [SupplierSurveyId], [IsQuotaCheck], [Id] FROM dbo.allocatedvendor
     WHERE SurveyId IN (SELECT SurveyId FROM @SurveyId);
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.allocatedvendor OFF;
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.allocatedvendor OFF;
 END
 GO
 
@@ -257,11 +257,11 @@ ALTER PROCEDURE dbo.usp_MoveSurveysBySurveyIds
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.surveys ON;
-    INSERT INTO neuralbyt_archive.dbo.surveys
-    SELECT * FROM dbo.surveys
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.surveys ON;
+    INSERT INTO staging_neuralbyt_archive.dbo.surveys ([Id], [SurveyTitle], [SurveyGUID], [Description], [SurveyStatus], [TsSurveyCode], [LangId], [LOI], [SpeederCheck], [IR], [CPI], [SurveyGruopId], [ProjectManagerId], [CompleteRequired], [LiveURL], [TestURL], [AccountManagerId], [GroupSecurityId], [ClientId], [ClientBillingPO], [IsUniqueLinkSurvey], [IsCountryCheck], [IsIpDuplicate], [IsSpeederCheck], [IsFilterDemographics], [IsVendorQuotaCheck], [CreatedBy], [CreatedAt], [Last_UpdatedBy], [Last_UpdatedAt], [Last_Demographics_UpdatedAt], [Last_Quota_UpdatedAt], [Survey_Closed_At], [SurveyType], [IsActive], [IsHmacEnabled], [IsGroupSecurityEnabled], [SupplyProjectId], [ReservationExpiryTime], [ReservedCount], [IsDemoPerfectMatch], [IsCloneSurvey], [ParentSurveyId], [IsTest], [IsBadSurvey], [Study_Type], [SupportedDevice], [Category], [FieldDays], [IsPulledSurvey], [IsExposed], [TSSubClient], [B2BSurvey], [SecondaryProjectManagerId], [SupplyAccountName], [SuperFillterSurvey], [IsFilterSurvey], [IsRouterFilterSurvey], [IsPickedDIY], [IsPickedNotified], [PickedEmailTime], [PlatformPicked])
+    SELECT [Id], [SurveyTitle], [SurveyGUID], [Description], [SurveyStatus], [TsSurveyCode], [LangId], [LOI], [SpeederCheck], [IR], [CPI], [SurveyGruopId], [ProjectManagerId], [CompleteRequired], [LiveURL], [TestURL], [AccountManagerId], [GroupSecurityId], [ClientId], [ClientBillingPO], [IsUniqueLinkSurvey], [IsCountryCheck], [IsIpDuplicate], [IsSpeederCheck], [IsFilterDemographics], [IsVendorQuotaCheck], [CreatedBy], [CreatedAt], [Last_UpdatedBy], [Last_UpdatedAt], [Last_Demographics_UpdatedAt], [Last_Quota_UpdatedAt], [Survey_Closed_At], [SurveyType], [IsActive], [IsHmacEnabled], [IsGroupSecurityEnabled], [SupplyProjectId], [ReservationExpiryTime], [ReservedCount], [IsDemoPerfectMatch], [IsCloneSurvey], [ParentSurveyId], [IsTest], [IsBadSurvey], [Study_Type], [SupportedDevice], [Category], [FieldDays], [IsPulledSurvey], [IsExposed], [TSSubClient], [B2BSurvey], [SecondaryProjectManagerId], [SupplyAccountName], [SuperFillterSurvey], [IsFilterSurvey], [IsRouterFilterSurvey], [IsPickedDIY], [IsPickedNotified], [PickedEmailTime], [PlatformPicked] FROM dbo.surveys
     WHERE SurveyGUID IN (SELECT SurveyId FROM @SurveyId);
-    SET IDENTITY_INSERT neuralbyt_archive.dbo.surveys OFF;
+    SET IDENTITY_INSERT staging_neuralbyt_archive.dbo.surveys OFF;
 END
 GO
 
@@ -296,7 +296,7 @@ CREATE OR ALTER PROCEDURE dbo.usp_UpsertArchivalStatus
 AS
 BEGIN
     SET NOCOUNT ON;
-    MERGE INTO neuralbyt_archive.dbo.ArchivalStatus AS target
+    MERGE INTO staging_neuralbyt_archive.dbo.ArchivalStatus AS target
     USING (SELECT @SessionId AS SessionId, @TableName AS TableName) AS source
         ON target.SessionId = source.SessionId AND target.TableName = source.TableName
     WHEN MATCHED THEN
