@@ -14,7 +14,7 @@
     "destDb": "neuralbyt_archive"
   },
   "BulkCopy": {
-    "daysOld": 450,
+    "daysOld": 90,
     "chunkSize": 50,
     "connectionTimeout": 300000,
     "requestTimeout": 300000

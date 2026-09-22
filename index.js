@@ -22,6 +22,13 @@ async function startApp() {
       res.json({ message: 'NBL Archiver is running.' });
     });
 
+    // Testing Route
+    app.get("/",function (req, res) {
+        res.send({
+            message: "Server is running"
+        });
+    });
+
     app.use('/api/jobs', jobStatusRoutes);
 
     app.use((req, res, next) => {
