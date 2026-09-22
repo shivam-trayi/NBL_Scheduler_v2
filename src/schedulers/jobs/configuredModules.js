@@ -2,6 +2,7 @@ import { logWarn } from '../../common/logger.js';
 
 // Maps job name (from config.json) to its lazy-import function
 const jobModuleMap = {
+  testMigrationJobForNBL: () => import('./dataMigration/testMigrationJobForNBL.js'),
   nblArchiver: () => import('./dataMigration/nblArchiverJob.js'),
 };
 

@@ -1,5 +1,13 @@
 {
   "jobs": {
+    "testMigrationJobForNBL": {
+      "isEnabled": false,
+      "maxConcurrency": 1,
+      "retries": 2,
+      "cronType": "Repetitive",
+      "date": null,
+      "cron": "* * * * *"
+    },
     "nblArchiver": {
       "isEnabled": true,
       "maxConcurrency": 1,

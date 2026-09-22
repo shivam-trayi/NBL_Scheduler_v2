@@ -14,31 +14,27 @@ const port = process.env.PORT || 3000;
 // Main entry point — loads config, schedules jobs, starts HTTP server
 async function startApp() {
   try {
-    logInfo('NBL Archiver starting...');
+    logInfo('Starting application...');
     const config = await loadSchedulerConfig();
     await scheduleJobs(config);
 
-    app.get('/', (req, res) => {
-      res.json({ message: 'NBL Archiver is running.' });
-    });
-
     // Testing Route
-    app.get("/",function (req, res) {
-        res.send({
-            message: "Server is running"
-        });
+    app.get("/", function (req, res) {
+      res.send({
+        message: "Server is running"
+      });
     });
 
     app.use('/api/jobs', jobStatusRoutes);
 
-    app.use((req, res, next) => {
+    app.use(function (req, res, next) {
       const error = new Error('Not Found');
       error.status = 404;
       next(error);
     });
 
     app.listen(port, () => {
-      logInfo(`NBL Archiver HTTP server listening at http://localhost:${port}`);
+      logInfo(`Server and WebSocket listening at http://localhost:${port}`);
     });
   } catch (err) {
     logError('Application failed to start: ' + (err && err.message ? err.message : err));
